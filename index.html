@@ -10,61 +10,59 @@
 
 <body>
     <header>
-        <h1 style="margin-bottom: 20px;">Dedo's Portfolio</h1>
+        <h1>De Donato</h1>
+        <h1 style="margin-bottom: 20px;">Tony's Portfolio</h1>
         <nav>
             <ul>
-                <li><a href="#projects">Projects</a></li>
+                <li><a href="#top">Projects</a></li>
                 <li><a href="#about">About Me</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    
+    <section id="top"></section>
     <section id="projects">
-        <h2 style="width: 100%;">Projects</h2>
-        <div class="project">
-            <img src="./front/assets/chat1.jpg"
-                alt="Project 1">
-            <h3>Project 1</h3>
-            <p>Description of project 1.</p>
+        <h1 style="width: 100%; margin-bottom: 5vh; font-size: xx-large;">Main Projects</h1>
+        <div class="project" onclick="show_full_project(1)">
+            <img src="./front/assets/shop_app.PNG" alt="Project 1">
+            <h2>car kit website</h2>
         </div>
-        <div class="project">
-            <img src="./front/assets/chat2.jpg"
-                alt="Project 2">
-            <h3>Project 2</h3>
-            <p>Description of project 2.</p>
+        <div class="project" onclick="show_full_project(2)">
+            <img src="./front/assets/groupie_tracker.PNG" alt="Project 2">
+            <h2>Valorant character collection</h2>
         </div>
-        <div class="project">
-            <img src="./front/assets/chat3.jpg"
-                alt="Project 3">
-            <h3>Project 3</h3>
-            <p>Description of project 3.</p>
-        </div>
-        <div class="project">
-            <img src="./front/assets/chat3.jpg"
-                alt="Project 4">
-            <h3>Project 4</h3>
-            <p>Description of project 4.</p>
-        </div>
-        <div class="project">
-            <img src="./front/assets/chat3.jpg"
-                alt="Project 5">
-            <h3>Project 5</h3>
-            <p>Description of project 5.</p>
+        <div class="project" onclick="show_full_project(3)">
+            <img src="./front/assets/charolais.PNG" alt="Project 3">
+            <h2>Local product shop website</h2>
         </div>
     </section>
 
     <section id="about">
-        <h2>About Me</h2>
+        <h2 style="margin-bottom: 2vh;">About Me</h2>
         <p>Computer science student at Ynov campus in Aix en Provence, I am entering the second year of a bachelor's
             degree.</p>
     </section>
 
-    <section id="contact">
-        <h2>Contact</h2>
+    <section id="contact" style="gap: 1vh;">
+        <h2 style="margin-bottom: 1vh;">Contact</h2>
         <p>You can reach me at: tonydedo13@gmail.com</p>
     </section>
+
+
+    <div id="full_project_blur"></div>
+    <div id="full_project">
+        <div id="full_project_content">
+            <div id="close_ctn">
+                <div id="close" onclick="close_full_project_view()">X</div>
+            </div>
+            <video id="project_video" src="" loop autoplay muted controls></video>
+            <div id="full_project_text">
+                <h1 id="full_project_title"></h1>
+                <p id="full_project_description"></p>
+            </div>
+        </div>
+    </div>
 
 
     <div id="background_vid">
@@ -86,11 +84,10 @@
 
 
 <style>
-
-@font-face {
-    font-family: "Androgyne_TB" ;
-    src: url("front/font/Androgyne-Medium/Androgyne_TB.otf");
-}
+    @font-face {
+        font-family: "Androgyne_TB";
+        src: url("front/font/Androgyne-Medium/Androgyne_TB.otf");
+    }
 
     body {
         margin: 0;
@@ -105,7 +102,6 @@
         width: 100%;
         height: 100%;
         z-index: -1;
-        /* Place behind content */
     }
 
     #myVideo {
@@ -113,16 +109,11 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        /* Center the video */
         min-width: 100%;
-        /* Make sure the video covers the entire screen width */
         min-height: 100%;
-        /* Make sure the video covers the entire screen height */
         filter: blur(10px);
-        /* Apply a blur effect */
     }
 
-    /* Reset some default styles */
     h1,
     h2,
     h3,
@@ -136,7 +127,7 @@
         position: fixed;
         background-color: #151c20;
         color: #fff;
-        padding: 20px;
+        padding: 20px 0;
         text-align: center;
         width: 100vw;
         top: 0;
@@ -163,7 +154,22 @@
     .project {
         margin-bottom: 40px;
         width: 26vw;
-        min-width: 300px;
+        min-width: 270px;
+    }
+
+    .project h2 {
+        margin-top: 8px;
+        text-align: center;
+    }
+
+    .project:hover {
+        cursor: pointer;
+        scale: 1.1;
+        transition: 1s;
+    }
+
+    .project:not(:hover) {
+        transition: 0.5s;
     }
 
     .project img {
@@ -180,7 +186,7 @@
         flex-wrap: wrap;
         justify-content: space-evenly;
         background-color: #3333338d;
-        color: #e1e1e1;
+        color: #f2f2f2;
         border-radius: 20px;
         gap: 20px;
     }
@@ -191,11 +197,98 @@
         color: #e1e1e1;
         padding: 20px;
     }
+
     #contact {
         color: #e1e1e1;
         padding: 20px;
         background-color: #151c20;
     }
 
-    /* Add more styling as needed */
+
+    #full_project_blur {
+        background-color: #000000a3;
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 1000vh;
+        width: 1000vw;
+        z-index: 9;
+    }
+
+    #full_project {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: max-content;
+        display: none;
+        justify-content: center;
+        align-items: start;
+        z-index: 10;
+    }
+
+    #full_project_content {
+        width: 80vw;
+        height: min-content;
+        background-color: #151c20;
+        color: white;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        padding: 4vh;
+        margin-top: 10vh;
+        gap: 40px;
+    }
+
+    #close_ctn {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    #close {
+        font-size: xxx-large;
+        color: #ffffffbe;
+    }
+
+    #close:hover {
+        cursor: pointer;
+        transition: 1s;
+        scale: 1.1;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    #close:not(:hover) {
+        transition: 1s;
+    }
+
+    #project_video {
+        width: 75%;
+        border-radius: 20px;
+    }
+
+    #full_project_text {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 30px;
+    }
+
+    #full_project_title {
+        font-size: xx-large;
+        text-align: center;
+    }
+
+    #full_project_description {
+        font-size: x-large;
+        text-align: center;
+        margin-bottom: 5vh;
+    }
 </style>
